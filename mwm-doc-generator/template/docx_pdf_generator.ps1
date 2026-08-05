@@ -41,8 +41,8 @@ Write-Output "CHECKPOINT: script started"
 
 # ----------------------------- CONFIGURE ME --------------------------------
 $baseName     = 'My_Document'
-$docsDir      = 'C:\Users\vzwhaley\Documents'
-$downloadsDir = 'C:\Users\vzwhaley\Downloads'
+$docsDir      = Join-Path $env:USERPROFILE 'Documents'
+$downloadsDir = Join-Path $env:USERPROFILE 'Downloads'
 
 # ----------------------------- CONTENT --------------------------------------
 # Replace the entries below. Order matters — blocks render top to bottom.

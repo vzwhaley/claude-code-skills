@@ -13,7 +13,7 @@ Every Moon Whale Media product keeps a `SESSION_HANDOFF.md` at the repo root (My
 # <Product>™ — Session Handoff
 
 **Last updated:** YYYY-MM-DD (one-line what-changed → see §N)
-**Repo:** `vzwhaley/<slug>` (GitHub) · local: `C:\Users\vzwhaley\Herd\MOON_WHALE_MEDIA\<Proj>`
+**Repo:** `<github-user>/<slug>` (GitHub) · local: `~\Herd\MOON_WHALE_MEDIA\<Proj>`
 **Branch:** `main` — in sync with `origin/main` at **`<sha>`** — **working tree CLEAN.**
 
 > Paste this whole file as your first message in a new Claude Code session,
