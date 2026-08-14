@@ -11,7 +11,7 @@ The official lockup for EVERY product is: **product mark + "`<Product>`™" word
 
 - Wordmark convention: compound name split across two colors — first word(s) in ink, last word in the brand accent (e.g. "CoderStudy" ink + "Flow" blue), with superscript ™.
 - The tagline links to `https://moonwhale.media` on the web and uses `class="font-brand"` (Spantaran).
-- Spantaran is used ONLY for the tagline/signature — body text stays system/default fonts.
+- **Spantaran is EXCLUSIVELY the Moon Whale Media COMPANY font** (user-confirmed 2026-08-14): only the "by moon whale media, llc" tagline/signature and MWM company references. NEVER a product wordmark, heading, or body text. Each product wordmark has its own display font — read it from the product's BrandLogo/ApplicationLogo component + tailwind config (e.g. CoderStudyFlow: JetBrains Mono; NewsroomFlow: Source Serif 4; Cardback Cantina: DM Sans; FileManagerFlow: Figtree).
 
 ## Where assets live (per product convention)
 
