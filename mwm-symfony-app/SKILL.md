@@ -16,7 +16,7 @@ No Moon Whale Media product ships on Symfony yet, so this skill maps the battle-
 - Async: **Messenger** with the Doctrine transport (house rule "database queue driver") — but prefer scheduled console commands (`symfony/scheduler`) over async handlers, matching the Laravel habit.
 - Console commands namespaced `<appslug>:<verb-noun>`.
 - Testing: PHPUnit with `WebTestCase`/`KernelTestCase`; test env uses SQLite in-memory and sync transports.
-- Dev host: Herd supports generic PHP apps — `https://<brand>.test` with docroot `public/`. Herd is never a production server.
+- Dev host: **Herd, always** — it serves generic PHP apps: `https://<brand>.test` with docroot `public/` (`herd link` + `herd secure` from the app dir; verify with `herd links`). Never `symfony serve` / `php -S` for local browsing or audits. Herd is never a production server.
 
 ## What carries over unchanged (brand + money rules)
 

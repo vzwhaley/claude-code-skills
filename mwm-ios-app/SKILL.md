@@ -23,7 +23,7 @@ Proven conventions shared by the AstrologerFlow, FileManagerFlow, MyEmergencyScr
 - The client **mirrors the Android Retrofit interface method-for-method** — same endpoint list, same names — so the two clients stay reviewable side by side. If useful, reimplement Retrofit's `Response<T>` shape: `struct ApiResponse<T> { statusCode; body; errorBody; var isSuccessful }`.
 - Auth is **Laravel Sanctum tokens**: `POST /auth/login` returns a plain-text token.
 - **Token storage: Keychain** `kSecClassGenericPassword`, `service = <bundle id>`, `account = "api-token"`, `kSecAttrAccessibleAfterFirstUnlock`. Widget-bearing apps mirror the token into the App Group.
-- Base URL: `#if DEBUG` in a `Config`/`AppConfig` enum — debug = `http://localhost:<port>` with `NSAllowsLocalNetworking: true` in Info.plist, release = production HTTPS.
+- Base URL: `#if DEBUG` in a `Config`/`AppConfig` enum — debug = the Herd site `https://<slug>.test` (the simulator shares the Mac's hosts file and keychain, so Herd's name and certificate just work once Herd runs on the Mac; a physical device needs the Mac's LAN address), release = production HTTPS. Keep `NSAllowsLocalNetworking: true` only for local-network development.
 - **Ad config comes from the server**: `GET /api/config` returns ad unit IDs for Free users, `ads.show=false` for Pro. Never ship unit IDs to Pro clients.
 - "Upgrade to Pro" opens the website already logged in via `POST /api/auth/web-handoff` (single-use 5-minute token).
 

@@ -14,7 +14,7 @@ Proven conventions shared by the eight Moon Whale Media Laravel apps. Follow the
 - **DB:** MySQL or SQLite per product; always `SESSION_DRIVER=database`, `CACHE_STORE=database`, `QUEUE_CONNECTION=database`.
 - **Testing:** PHPUnit (house default), `phpunit.xml` env: `DB_CONNECTION=sqlite`, `DB_DATABASE=:memory:`, `QUEUE_CONNECTION=sync`.
 - **Scheduling:** artisan commands namespaced `<appslug>:<verb-noun>`, scheduled in `routes/console.php` (never a Kernel), with `->withoutOverlapping()` on recurring work and `->runInBackground()` on heavy jobs. Prefer scheduled commands over queued jobs unless truly async.
-- Dev host is **Herd**: `APP_URL=https://<brand>.test`. Herd is never a production server.
+- Dev host is **Herd, always**: `APP_URL=https://<brand>.test`, linked with `herd link` + `herd secure` run from the web dir (verify with `herd links`). Never `php artisan serve` / `php -S` for the site; headless audits, screenshots and media-kit captures target the `.test` URL; `.claude/launch.json` attaches to it (`{"name": "<slug>", "url": "https://<slug>.test"}`). `npm run dev` for Vite HMR is fine. Herd is never a production server.
 
 ## Tailwind theme (every app)
 

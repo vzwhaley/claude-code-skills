@@ -40,7 +40,7 @@ Every Moon Whale Media product keeps a `SESSION_HANDOFF.md` at the repo root (My
 
 - **Header**: always refresh the sha, date, and clean/dirty state at write time — run `git log -1 --format=%h` and `git status` first; never guess.
 - **§0**: demote the previous §0 into a condensed §0a/§0b block (newest first). Keep a running **"Hard-won gotchas (do not re-learn these)"** subsection — environment traps, case-sensitivity bites, emulator URL quirks. Never delete existing gotchas.
-- **§5** always covers the same six things: PowerShell-vs-WSL tool choice, per-platform build commands, preview/Herd URL, git rules (push after every commit; use `git commit -F <file>` because PS 5.1 mangles double quotes; commit-message prefixes `Web:|Android:|iOS:|Apps:`), emulator base URLs (`10.0.2.2` Android / `localhost` iOS), and case-sensitivity warnings.
+- **§5** always covers the same six things: PowerShell-vs-WSL tool choice, per-platform build commands, the Herd URL (`https://<slug>.test`, the only local web server - linked from the web dir; `herd links` to verify), git rules (push after every commit; use `git commit -F <file>` because PS 5.1 mangles double quotes; commit-message prefixes `Web:|Android:|iOS:|Apps:`), emulator base URLs (Android debug -> Herd via a debug Dns mapping `<slug>.test` to `10.0.2.2` + Herd CA trust; iOS simulator -> `https://<slug>.test`), and case-sensitivity warnings.
 - **§6 Locked decisions** is an anti-re-litigation contract: brand string with ™, tier pricing, naming/slug rules, deliberate exceptions. Only ADD to it; removing an entry requires the user's explicit say-so.
 - **§9** is a menu of 5–7 copy-pasteable next-session prompts matching §3/§4 items.
 

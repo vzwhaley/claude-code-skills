@@ -12,7 +12,7 @@ Every generator header carries a **SOURCE OF TRUTH** line naming the doc to upda
 ## Two proven lineages — reuse whichever the project already has
 
 ### Lineage A — Python + puppeteer (AstrologerFlow, CoderStudyFlow)
-- `build-tools/media-kit/shoot.js` (puppeteer-core against the live Herd site, `fullPage: true`, `deviceScaleFactor: 1.5`) → `out/*.png` + `out/captions.json` (`{order, captions}`). Pages declared as `[name, url, caption]` tuples split into `GUEST_PAGES` / `MEMBER_PAGES`.
+- `build-tools/media-kit/shoot.js` (puppeteer-core against the live Herd site `https://<slug>.test` - never an `artisan serve` port, `fullPage: true`, `deviceScaleFactor: 1.5`) → `out/*.png` + `out/captions.json` (`{order, captions}`). Pages declared as `[name, url, caption]` tuples split into `GUEST_PAGES` / `MEMBER_PAGES`.
 - **Pre-seed the cookie-consent localStorage key before any page script runs** so the banner doesn't overlay every shot; hide dev "Your Ad Here" placeholders.
 - `build_kit.py` — python-docx for the DOCX + an HTML twin printed via headless Chrome for the PDF, from the same constants.
 - `seed_demo.php` — idempotent fictional demo account (John Doe) for member-page shots.
