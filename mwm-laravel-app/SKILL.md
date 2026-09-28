@@ -83,12 +83,13 @@ Props: `variant: 'light'|'dark'`, `iconClass` (default `h-12 w-auto`), `tagline:
 ## Billing & monetization
 
 - **Stripe + Cashier.** `config/billing.php`: `prices` (env `STRIPE_PRICE_PRO_{MONTHLY,ANNUAL,LIFETIME}`), `display_prices` (UI only — Stripe is truth), `free_limits` (the single source of truth for feature gating), `checkout_enabled` pre-launch flag. **House price ladder: $4.99/mo, $49.99/yr, $149.99 lifetime** — identical family-wide on purpose.
-- Cashier webhook route named `cashier.webhook`. RevenueCat webhook (mobile IAP → web entitlement) only when the product has mobile IAP: header-authenticated `POST /api/revenuecat/webhook`, app sets RevenueCat `appUserID` to the local user id.
+- Cashier webhook route named `cashier.webhook`. **The website is the only place Pro is sold** (`mwm-billing-standard` skill): no RevenueCat / App Store / Play webhooks or receipt endpoints. Plan names are exactly Free, Monthly Pro, Yearly Pro, Lifetime Pro.
+- **Store billing switch** (every product with phone apps): `config/billing.php` `app_purchase_links.{android,ios}` (env `APP_PURCHASE_LINKS_ANDROID` / `_IOS`, both default false) → the app config endpoint returns `capabilities.purchase_links` (per `?platform=`, false when unknown) and `capabilities.manage_billing` (existing web subscribers only); an `AppViewMode` middleware + `appView` Inertia prop hides Pricing links and upgrade prompts on pages opened from the apps (`?from=app&platform=`) and redirects `/pricing` + checkout home. Reference: IdentiFlow (`ConfigController`, `AppViewMode`, `StoreBillingSwitchTest`, `AppViewModeTest`).
 - **Affiliates are a separate layer from AdSense:** `config/affiliate(s).php` with per-network `enabled` flags that are true iff the tracking identifier env is set — never ship an untracked/untagged link; dashed placeholder until the tag exists. Links `rel="sponsored noopener noreferrer"`, with the mandatory disclosure line "As an Amazon Associate, <Brand> earns from qualifying purchases." Affiliate panels use the full-bleed dark band style.
 
 ## Mobile API (when the product has apps)
 
-Sanctum personal access tokens: `POST /auth/login` (`throttle:10,1`) → `$user->createToken($device_name)->plainTextToken`; register `throttle:6,1`. Cross-cutting endpoints: `GET /api/config` (ad config — Free gets AdMob unit IDs, Pro gets `ads.show=false`), `POST /api/auth/web-handoff` (single-use 5-minute token so "Upgrade to Pro" lands on the site logged in). Path convention for new apps: `/api/v1/...`.
+Sanctum personal access tokens: `POST /auth/login` (`throttle:10,1`) → `$user->createToken($device_name)->plainTextToken`; register `throttle:6,1`. Cross-cutting endpoints: `GET /api/config` (ad config — Free gets AdMob unit IDs, Pro gets `ads.show=false`), `POST /api/auth/web-handoff` (single-use 5-minute token so the app can open the site signed in - desktop apps use it for "Upgrade to Pro"; phone apps only for account pages while the store billing switch is off). Path convention for new apps: `/api/v1/...`.
 
 ## Config / env style
 

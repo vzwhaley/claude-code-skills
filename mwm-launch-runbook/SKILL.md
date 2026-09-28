@@ -62,7 +62,7 @@ Web legal pages: `/privacy` + `/terms` routes, footer-linked, sitemap priority 0
 
 ## Store submission (mobile products)
 
-`docs/STORE-SUBMISSION.md` kit: what the apps actually collect (source of truth section first) → Play Data-safety form answers → Apple privacy nutrition label answers → listing copy → asset checklist. If using RevenueCat: dev accounts → store products → RevenueCat config → keys in apps → server webhook → test before shipping.
+`docs/STORE-SUBMISSION.md` kit: what the apps actually collect (source of truth section first) → Play Data-safety form answers → Apple privacy nutrition label answers → listing copy → asset checklist. Billing per the `mwm-billing-standard` skill: apps are free with **no in-app products**; App Store review note cites guideline 3.1.3(f) (free companion to a paid web service) with a demo Pro account; Play Payments answer: access to a subscription bought elsewhere only. Desktop builds: code-signed (Windows) and notarized (macOS), downloaded from the website.
 
 ## Pre-launch audit sweep (when asked to "check if we're ready")
 

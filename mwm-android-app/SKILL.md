@@ -23,7 +23,7 @@ These are the proven conventions shared by AstrologerFlow, FileManagerFlow, MyEm
 - `androidx.datastore:datastore-preferences` for non-sensitive prefs; `androidx.security:security-crypto` (EncryptedSharedPreferences) for the auth token
 - Coil (`coil-compose`) for images
 - AdMob `play-services-ads` for free tiers (+ `user-messaging-platform` for GDPR/UMP consent)
-- Billing: prefer web checkout (simplest); RevenueCat or Play Billing `billing-ktx` only when in-app purchase is explicitly required
+- Billing: **none in the app** - see the `mwm-billing-standard` skill. Pro is sold only on the website; the app is a free download, never includes RevenueCat / Play Billing `billing-ktx` / `com.android.vending.BILLING`, and hides all purchase UI unless the server's `capabilities.purchase_links` is true
 - Firebase messaging only if push is needed — gate the plugin: `if (file("google-services.json").exists()) { apply(plugin = …) }`
 
 ## Signing — keystore.properties pattern
@@ -63,7 +63,7 @@ class AuthInterceptor(private val tokenProvider: () -> String?) : Interceptor {
 - Logging interceptor: `BASIC`/`HEADERS` in debug, `NONE` in release, and `redactHeader("Authorization")`.
 - Base URLs are build-time constants: `buildConfigField("String", "API_BASE_URL", …)` — release = production HTTPS. **Debug talks to Herd** (the website always runs on Herd at `https://<slug>.test` - global CLAUDE.md rule): the emulator can't resolve `*.test`, so the debug build sets `API_BASE_URL = "https://<slug>.test"`, gives OkHttp a DEBUG-only `Dns` that maps `<slug>.test` to `10.0.2.2` (the host), and trusts Herd's local CA through `src/debug/res/xml/network_security_config.xml` (`<certificates src="@raw/herd_ca"/>`, the CA exported from Herd). Release keeps HTTPS-only + system CAs. For a physical device, map to the PC's LAN IP. Only if that isn't wired up yet: a temporary `php artisan serve --host=0.0.0.0` at `http://10.0.2.2:<port>` for the emulator run - say so and stop it afterwards. A runtime override behind a Settings → Developer screen is a nice-to-have (see FileManagerFlow's rebuildable `ApiClient.setBaseUrl()`).
 - **Ad config comes from the server**: `GET /api/config` returns AdMob unit IDs for Free users and `ads.show=false, units=null` for Pro. Never hardcode unit IDs client-side beyond the AdMob app ID, and never ship unit IDs to Pro clients.
-- "Upgrade to Pro" flows to the website already logged in via `POST /api/auth/web-handoff` (single-use 5-minute token).
+- **Store billing switch:** send `platform=android` to the config endpoint and read `capabilities.purchase_links` (default false) and `capabilities.manage_billing`. While false: no "Upgrade to Pro" / "Go Pro" / prices / pricing links - locked features show neutral text; "Manage Billing" only when `manage_billing`. Website URLs the app opens get `?from=app&platform=android`. `POST /api/auth/web-handoff` (single-use 5-minute token) may open account pages signed in, never checkout while the switch is off. Reference: IdentiFlow Android `Session` / `UpgradePrompt`.
 
 ## Branding & theming
 

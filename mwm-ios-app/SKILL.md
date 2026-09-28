@@ -25,14 +25,11 @@ Proven conventions shared by the AstrologerFlow, FileManagerFlow, MyEmergencyScr
 - **Token storage: Keychain** `kSecClassGenericPassword`, `service = <bundle id>`, `account = "api-token"`, `kSecAttrAccessibleAfterFirstUnlock`. Widget-bearing apps mirror the token into the App Group.
 - Base URL: `#if DEBUG` in a `Config`/`AppConfig` enum — debug = the Herd site `https://<slug>.test` (the simulator shares the Mac's hosts file and keychain, so Herd's name and certificate just work once Herd runs on the Mac; a physical device needs the Mac's LAN address), release = production HTTPS. Keep `NSAllowsLocalNetworking: true` only for local-network development.
 - **Ad config comes from the server**: `GET /api/config` returns ad unit IDs for Free users, `ads.show=false` for Pro. Never ship unit IDs to Pro clients.
-- "Upgrade to Pro" opens the website already logged in via `POST /api/auth/web-handoff` (single-use 5-minute token).
+- **Store billing switch:** send `platform=ios` to the config endpoint and read `capabilities.purchase_links` (default false) and `capabilities.manage_billing`; web handoff (`POST /api/auth/web-handoff`) may open account pages signed in, never checkout while the switch is off. Website URLs the app opens get `?from=app&platform=ios`.
 
 ## Billing
 
-Prefer, in order:
-1. **Web checkout** (no IAP at all) — the default for utility apps where Apple's rules allow it.
-2. **Raw StoreKit 2** — `Product.products(for:)`, then POST the JWS transaction to the backend's `/billing/apple/verify`; **the server is the entitlement source of truth** (see MyEmergencyScreen's `Store.swift`).
-3. **RevenueCat** (`purchases-ios` via SPM) only when cross-platform subscription management is genuinely needed — and gate on an empty API key so the app falls back to web checkout.
+**Follow the `mwm-billing-standard` skill.** The app is a free App Store download and sells nothing: no StoreKit, no RevenueCat, no in-app purchase products, no prices. Pro is bought on the product website (Stripe) and the server says whether the user is Pro. While `capabilities.purchase_links` is false (the default) there is no Upgrade / Go Pro button, pricing card or link to buying; locked features show neutral text; "Manage Billing" only when `capabilities.manage_billing`. App Review note cites guideline 3.1.3(f) (free companion to a paid web service). In-app purchase is only a fallback if a reviewer insists - then RevenueCat into the same server-side Pro record.
 
 ## Branding & UI
 
