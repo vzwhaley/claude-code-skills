@@ -170,5 +170,4 @@ auto-update from the website's release feed.
 
 ---
 
-Canonical copy: `C:\Users
 Canonical copy: `C:\Users\vzwhaley\Herd\MOON_WHALE_MEDIA\MWM_BILLING_AND_DISTRIBUTION_STANDARD.md` (keep the two identical).
