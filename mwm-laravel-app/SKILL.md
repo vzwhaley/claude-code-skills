@@ -9,6 +9,7 @@ Proven conventions shared by the eight Moon Whale Media Laravel apps. Follow the
 
 ## Stack defaults
 
+- **Repo:** the web app is the `<slug>-web/` folder of the product's single monorepo (with `<slug>-android/` / `<slug>-ios/` beside it); all work is committed on `main`, no branches (see Repository rules in `mwm-new-product`).
 - **Laravel 13 + PHP 8.3, Inertia 2 + Vue 3, Tailwind 3.x, Vite, Ziggy, Pint.** No Blade UI (Blade only for the `app.blade.php` root shell), no Livewire. Fonts from `https://fonts.bunny.net` — never Google Fonts.
 - **Auth: Laravel Breeze** (Inertia+Vue), with house throttles added: `throttle:6,1` on register/password, `throttle:10,1` on login. Socialite (Google/Apple/Discord) optional, gated on `filled(config('services.<x>.client_id'))` and surfaced via a `socialProviders` Inertia prop.
 - **DB:** MySQL or SQLite per product; always `SESSION_DRIVER=database`, `CACHE_STORE=database`, `QUEUE_CONNECTION=database`.

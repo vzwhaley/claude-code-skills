@@ -9,6 +9,7 @@ These are the proven conventions shared by AstrologerFlow, FileManagerFlow, MyEm
 
 ## Stack (non-negotiable defaults)
 
+- **Repo:** the app lives in the product's single monorepo as the `<slug>-android/` folder and is committed on `main` with the rest of the product (see the Repository rules in `mwm-new-product`). Never give it its own GitHub repo or `.git`, and don't create branches.
 - **Kotlin + Jetpack Compose + Material 3.** No XML layouts for app UI (XML only for launcher icons, the boot `themes.xml`, and AppWidget RemoteViews). No Fragments, no View system, no data binding.
 - **minSdk = 26**, targetSdk/compileSdk = current stable. `JavaVersion.VERSION_17` / `jvmTarget = "17"`.
 - **Gradle version catalogs** (`gradle/libs.versions.toml` + `alias(libs.plugins.…)`). Use the standard `settings.gradle.kts` (google() `includeGroupByRegex` filter, `FAIL_ON_PROJECT_REPOS`), differing only in `rootProject.name`.

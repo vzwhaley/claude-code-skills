@@ -9,6 +9,7 @@ Proven conventions shared by the AstrologerFlow, FileManagerFlow, MyEmergencyScr
 
 ## Stack (non-negotiable defaults)
 
+- **Repo:** the app lives in the product's single monorepo as the `<slug>-ios/` folder and is committed on `main` with the rest of the product (see the Repository rules in `mwm-new-product`). Never give it its own GitHub repo or `.git`, and don't create branches.
 - **100% SwiftUI, zero UIKit** — the only exceptions are `UIViewRepresentable` wrappers when a framework demands it (AdMob banners, AVFoundation camera/scanning).
 - **MVVM**: one `ObservableObject` per screen for content-heavy apps, or a single `AppState` for small apps.
 - **Min iOS 16.0** (17.0 if a needed API requires it). Swift 5.x.

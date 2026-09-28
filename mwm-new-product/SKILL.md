@@ -7,6 +7,13 @@ description: Bootstrap a brand-new Moon Whale Media product monorepo — directo
 
 Bootstraps a product the way all eight existing ones are shaped. Ask the user only for: **product name**, **one-line concept**, **brand accent color**, **which clients** (web-only vs web+android+ios), and **web framework** (Laravel default; Symfony on request). Everything else has a house default.
 
+## Repository rules (every Moon Whale Media product)
+
+- **One GitHub repo per product** (`vzwhaley/<slug>`), rooted at the product folder `~/Herd/MOON_WHALE_MEDIA/<Product>/`, default branch **`main`**.
+- **All work is committed directly on `main`** and pushed after every commit. No feature, bugfix or `claude/*` branches and no worktrees; if work ever lands elsewhere, bring it onto `main` and remove the branch.
+- **Mobile apps are folders in that same repo** (`<slug>-android/`, `<slug>-ios/`), next to `<slug>-web/`. Never a separate GitHub repo and never a nested `.git`.
+- A force-push is a last resort: tag the old tip first (`archive/main-YYYY-MM`) and warn before running it.
+
 ## Monorepo layout (create at `~/Herd/MOON_WHALE_MEDIA/<Product>/`)
 
 ```
@@ -27,7 +34,7 @@ Naming: product `<Name>Flow`-style title; repo `vzwhaley/<kebab-slug>`; web dir 
 
 ## Scaffold order
 
-1. **Git + GitHub**: `git init` at product root, single repo for the whole monorepo, remote `git@github.com:vzwhaley/<slug>.git`, branch `main`. Push after every commit (standing rule).
+1. **Git + GitHub**: `git init` at product root, single repo for the whole monorepo (web + android + ios folders), remote `git@github.com:vzwhaley/<slug>.git`, branch `main` only - no other branches. Push after every commit (standing rule).
 2. **Web app** (`laravel new` via composer, then Breeze Inertia+Vue): apply the full mwm-laravel-app convention set — Tailwind house theme (`ink`, `brand` ramp, `font-brand`), BrandLogo + SiteFooter + ContactDrawer + ConsentBanner, SecurityHeaders middleware, AdSlot + `config/adsense.php`, `config/billing.php` with the $4.99/$49.99/$149.99 ladder, `free_limits` and (with phone apps) the store billing switch per the `mwm-billing-standard` skill, SEO head + sitemap + robots, legal `/privacy` + `/terms` placeholders, `phpunit.xml` sqlite/:memory:/sync. Copy `Spantaran.ttf` into `public/fonts/` from any existing product.
 3. **Herd (the only local web server)**: `Set-Location <Product>\<slug>-web` FIRST, then `herd link <slug>` + `herd secure <slug>`; verify with `herd links` that the Path column is the web dir (a link run from an admin shell's default `C:\WINDOWS\system32` points Herd at System32). `.claude/launch.json` attaches to `https://<slug>.test`. Never `php artisan serve` for the website - see the global CLAUDE.md "Local website development = Laravel Herd" rule (the Android-emulator exception is there too).
 4. **Mobile clients** (if requested): scaffold per mwm-android-app / mwm-ios-app, wired to the web app's Sanctum API (`/api/v1/...`, `GET /api/config`, web-handoff endpoint).
